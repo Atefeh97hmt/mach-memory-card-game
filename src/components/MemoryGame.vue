@@ -1,0 +1,82 @@
+<template>
+    <div class="memory-game">
+      <div v-for="(card, index) in shuffledCards" :key="index" @click="flipCard(index)">
+        <div v-if="card.flipped" class="card">{{ card.value }}</div>
+        <div v-else class="card back"></div>
+      </div>
+    </div>
+  </template>
+  
+  <script setup>
+  import { ref, onMounted } from 'vue';
+  
+  const cards = ref([
+    { value: 'A', flipped: false, matched: false },
+    { value: 'B', flipped: false, matched: false },
+    { value: 'A', flipped: false, matched: false },
+    { value: 'B', flipped: false, matched: false },
+
+    { value: 'C', flipped: false, matched: false },
+    { value: 'D', flipped: false, matched: false },
+    { value: 'C', flipped: false, matched: false },
+    { value: 'D', flipped: false, matched: false },
+
+
+    { value: 'E', flipped: false, matched: false },
+    { value: 'F', flipped: false, matched: false },
+    { value: 'E', flipped: false, matched: false },
+    { value: 'F', flipped: false, matched: false },
+  ]);
+  
+  const shuffledCards = ref([]);
+  
+  onMounted(() => {
+    shuffleCards();
+  });
+  
+  const shuffleCards = () => {
+    shuffledCards.value = [...cards.value].sort(() => Math.random() - 0.5);
+  };
+  
+  const flipCard = (index) => {
+    if (!shuffledCards.value[index].flipped) {
+      shuffledCards.value[index].flipped = true;
+  
+      const flippedCards = shuffledCards.value.filter((card) => card.flipped && !card.matched);
+  
+      if (flippedCards.length === 2) {
+        if (flippedCards[0].value === flippedCards[1].value) {
+          flippedCards.forEach((card) => (card.matched = true));
+        } else {
+          setTimeout(() => {
+            flippedCards.forEach((card) => (card.flipped = false));
+          }, 500);
+        }
+      }
+    }
+  };
+  </script>
+  
+  <style>
+  .memory-game {
+    display: grid;
+    grid-template-columns: repeat(2, 100px);
+    grid-gap: 10px;
+  }
+  
+  .card {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightblue;
+    cursor: pointer;
+    font-size: 24px;
+  }
+  
+  .back {
+    background-color: gray;
+  }
+  
+  </style>
