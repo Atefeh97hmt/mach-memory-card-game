@@ -58,10 +58,16 @@
   </script>
   
   <style>
+
+  body{
+    display: flex;
+    justify-content: center;
+  }
   .memory-game {
     display: grid;
-    grid-template-columns: repeat(2, 100px);
+    grid-template-columns: repeat(4, 100px);
     grid-gap: 10px;
+    margin-top: 50px;;
   }
   
   .card {
