@@ -13,7 +13,7 @@
   </template>
   
   <script setup>
-  import { ref, onMounted, computed } from 'vue';
+  import { ref, computed } from 'vue';
   import { shuffle } from 'lodash';
   const cards = ref([
     { value: 'A', flipped: false, matched: false },
@@ -35,15 +35,12 @@
   
   const shuffledCards = ref([]);
   
-  onMounted(() => {
-    shuffleCards();
-  });
-  
   const shuffleCards = () => {
     // shuffledCards.value = [...cards.value].sort(() => Math.random() - 0.5);
     shuffledCards.value = shuffle([...cards.value]); 
   };
-  
+  shuffleCards();
+
   const flipCard = (index) => {
     if (!shuffledCards.value[index].flipped) {
       shuffledCards.value[index].flipped = true;
