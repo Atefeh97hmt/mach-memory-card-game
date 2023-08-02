@@ -4,6 +4,8 @@
         <div v-if="card.flipped" class="card">{{ card.value }}</div>
         <div v-else class="card back"></div>
       </div>
+      <button @click="resetGame">Restart Game</button>
+
     </div>
   </template>
   
@@ -55,6 +57,16 @@
       }
     }
   };
+
+
+  const resetGame = () => {
+  shuffledCards.value.forEach((card) => {
+    card.flipped = false;
+    card.matched = false;
+  });
+  shuffleCards();
+};
+
   </script>
   
   <style>
