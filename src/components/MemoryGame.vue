@@ -5,12 +5,15 @@
         <div v-else class="card back"></div>
       </div>
       <button @click="resetGame">Restart Game</button>
-
+      <div v-if="isGameFinished">
+      Congratulations! You have completed the game.
     </div>
+    </div>
+
   </template>
   
   <script setup>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, computed } from 'vue';
   
   const cards = ref([
     { value: 'A', flipped: false, matched: false },
@@ -59,6 +62,8 @@
   };
 
 
+  ////////////////////////////resetGame//////////////////////////
+
   const resetGame = () => {
   shuffledCards.value.forEach((card) => {
     card.flipped = false;
@@ -66,6 +71,12 @@
   });
   shuffleCards();
 };
+
+  ////////////////////////////isGameFinished//////////////////////////
+
+const isGameFinished = computed(() => {
+  return shuffledCards.value.every((card) => card.matched);
+});
 
   </script>
   
