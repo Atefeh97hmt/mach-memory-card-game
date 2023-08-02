@@ -14,7 +14,7 @@
   
   <script setup>
   import { ref, onMounted, computed } from 'vue';
-  
+  import { shuffle } from 'lodash';
   const cards = ref([
     { value: 'A', flipped: false, matched: false },
     { value: 'B', flipped: false, matched: false },
@@ -40,7 +40,8 @@
   });
   
   const shuffleCards = () => {
-    shuffledCards.value = [...cards.value].sort(() => Math.random() - 0.5);
+    // shuffledCards.value = [...cards.value].sort(() => Math.random() - 0.5);
+    shuffledCards.value = shuffle([...cards.value]); 
   };
   
   const flipCard = (index) => {
